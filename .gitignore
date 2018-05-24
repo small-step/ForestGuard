@@ -6,7 +6,6 @@
 [Pp]ackages/
 
 Assets/AssetStoreTools*
-ProjectSettings/ProjectVersion.txt
 Config/socket.txt
 *.meta
 
