@@ -20,10 +20,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4986370107884978}
   - component: {fileID: 212439390552954766}
-  - component: {fileID: 114568080070878114}
+  - component: {fileID: 114595780078613496}
   m_Layer: 0
   m_Name: Gun
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -41,7 +41,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114568080070878114
+--- !u!114 &114595780078613496
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -49,9 +49,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1882485466616032}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fcb3d203c5d69b42831f2596a828c38, type: 3}
+  m_Script: {fileID: 11500000, guid: a59b9fe2b988ec64c92e6dab5ba2fa6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Force: 1000
+  currentFireTime: 0
+  fireRate: 0.2
 --- !u!212 &212439390552954766
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -83,15 +86,15 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -2135797479
-  m_SortingLayer: 1
+  m_SortingLayerID: 1282341857
+  m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 6eae91978d2ff014ea8e1bb2f213f9ee, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8bbbffe505c60a54bbe3860dfd105df8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.64, y: 0.36}
+  m_Size: {x: 2.49, y: 2.06}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
