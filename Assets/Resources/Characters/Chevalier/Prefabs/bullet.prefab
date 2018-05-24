@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212982760268031428}
   - component: {fileID: 61420178851616178}
   - component: {fileID: 50413965506693668}
-  - component: {fileID: 114411350682740688}
+  - component: {fileID: 114531442420351990}
   m_Layer: 0
   m_Name: bullet
   m_TagString: Untagged
@@ -56,8 +56,8 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_AngularDrag: 0
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -80,7 +80,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 0.5, y: 0.5}
-    newSize: {x: 0.36, y: 0.12}
+    newSize: {x: 0.5, y: 0.5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -88,7 +88,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.3}
   m_EdgeRadius: 0
---- !u!114 &114411350682740688
+--- !u!114 &114531442420351990
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -96,12 +96,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1691231031597760}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 132af8e0c671e114ea4c324e689c1a35, type: 3}
+  m_Script: {fileID: 11500000, guid: f5673f646aa8ba9419e735c6a94a9fb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shotSpawn: {fileID: 0}
-  fireRate: 0.2
-  bulletLifeTime: 1
 --- !u!212 &212982760268031428
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -133,15 +130,15 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -2135797479
+  m_SortingLayerID: 1282341857
   m_SortingLayer: 2
-  m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: a0ae169770332c246923f344dd2305a3, type: 3}
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 3620db5e7494a7c42a68aea6479bfb6d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.36, y: 0.12}
+  m_Size: {x: 0.5, y: 0.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

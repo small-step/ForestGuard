@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4591324036546924}
-  - component: {fileID: 114995565582248014}
+  - component: {fileID: 114077288005427996}
   m_Layer: 0
   m_Name: bulletPool
   m_TagString: Untagged
@@ -40,7 +40,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114995565582248014
+--- !u!114 &114077288005427996
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -48,9 +48,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1741262037354234}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc28ab08651e90343ad86f517e9149c3, type: 3}
+  m_Script: {fileID: 11500000, guid: 600b43d84dfda4f42bf50b35b51cc2fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletObj: {fileID: 1087597988787228, guid: bed4bc4ed56cfaa45b163cad7fa1a06c, type: 2}
-  pooledAmount: 20
-  lockPoolSize: 1
+  bulletObj: {fileID: 1691231031597760, guid: fd2a9565ab7ca734bb562b7edfcc7657, type: 2}
+  pooledAmount: 5
+  lockPoolSize: 0

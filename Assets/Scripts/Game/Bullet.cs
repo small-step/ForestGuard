@@ -5,6 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour {
 
     private float lifetime = 2f;
+    private float  bulletDamage;//TODO gunType
 
     private void Start()
     {
@@ -19,6 +20,17 @@ public class Bullet : MonoBehaviour {
     void Update()
     {
         
+    }
+
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.transform.tag == "backgroundCollider"){
+            if (this.gameObject.activeSelf)
+        {
+            this.gameObject.SetActive(false);
+        }
+        }
     }
 
     private IEnumerator DestroyWeapon(GameObject obj, float desTime)
