@@ -14,7 +14,7 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: DefaultCompany
   productName: ForestGuard
-  defaultCursor: {fileID: 2800000, guid: 765a43d0f0eeba74895e43bdb38e0a2b, type: 3}
+  defaultCursor: {fileID: 2800000, guid: eb92c74ab3472f441a458f1d892132a9, type: 3}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
   m_ShowUnitySplashScreen: 1

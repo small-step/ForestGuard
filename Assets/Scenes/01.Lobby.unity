@@ -221,7 +221,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 496, y: -233}
+  m_AnchoredPosition: {x: 199, y: -135}
   m_SizeDelta: {x: 202.49, y: 70.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &263445981
@@ -385,8 +385,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2056470853}
   m_HandleRect: {fileID: 2056470852}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 0.99999994
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -619,7 +619,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00009959669, y: 0.00018310547}
+  m_AnchoredPosition: {x: -0.000018126722, y: 0.00018310547}
   m_SizeDelta: {x: 0, y: 476.8}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &597388660
@@ -681,8 +681,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -264, y: 119}
-  m_SizeDelta: {x: 703.1, y: 473.8}
+  m_AnchoredPosition: {x: -129, y: 9}
+  m_SizeDelta: {x: 493.5, y: 317.84}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &737615126
 MonoBehaviour:
@@ -809,7 +809,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: e0be18f95630a6f46b63eaaa33d69bb1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 565a0964b8949f84fab27f0eaced022a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -942,7 +942,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 496.5, y: -335}
+  m_AnchoredPosition: {x: 205, y: -238}
   m_SizeDelta: {x: 202.2, y: 76.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1073009912
@@ -1066,8 +1066,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -248, y: 354}
-  m_SizeDelta: {x: 527.73, y: 33}
+  m_AnchoredPosition: {x: -66.2, y: 203.4}
+  m_SizeDelta: {x: 495.4, y: 30.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1075921873
 MonoBehaviour:
@@ -1322,8 +1322,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 502341837}
   m_HandleRect: {fileID: 502341836}
   m_Direction: 2
-  m_Value: 0.9999878
-  m_Size: 0.9580535
+  m_Value: 0.9999988
+  m_Size: 0.6309563
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1798,7 +1798,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.36100003}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -269.40002, y: -305.8}
+  m_AnchoredPosition: {x: -249, y: -210}
   m_SizeDelta: {x: 38, y: 43.299988}
   m_Pivot: {x: 0.5, y: 0.49999997}
 --- !u!114 &1687314533
@@ -2093,7 +2093,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -173.2, y: -307.89}
+  m_AnchoredPosition: {x: -120, y: -202}
   m_SizeDelta: {x: 38.5, y: 40.125}
   m_Pivot: {x: 0.49999994, y: 0.5}
 --- !u!114 &1974365440

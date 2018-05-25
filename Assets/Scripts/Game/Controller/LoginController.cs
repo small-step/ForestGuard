@@ -70,8 +70,8 @@ public class LoginController : MonoBehaviour {
 
         if (login)
         {
-            var usr = new { account = acct, password = psw };
-            //Client.Instance.Send();
+            var usr = new Account{ ID = acct, Password = psw };
+            Client.Instance.Send(EventType.Login, Proto.Serialize(usr));
             SceneManager.LoadSceneAsync(1);
         }
     }
@@ -85,8 +85,6 @@ public class LoginController : MonoBehaviour {
         psw = GameObject.Find("passwordField").GetComponent<InputField>().text;
         ncn = GameObject.Find("nicknameField").GetComponent<InputField>().text;
 
-
-
         if (String.IsNullOrEmpty(acct) || String.IsNullOrEmpty(psw) || String.IsNullOrEmpty(ncn))
         {
             signUp = false;
@@ -97,7 +95,7 @@ public class LoginController : MonoBehaviour {
         {
             var info = new UserInfo{ Account = acct, Password = psw, Nickname = ncn };
             var data = Proto.Serialize(info);
-            Client.Instance.Send(data);
+            Client.Instance.Send(EventType.Regist, data);
             //注册成功返回登陆界面
             if(UnityEditor.EditorUtility.DisplayDialog("Prompt", "Registration success", "Ok"))
             {
