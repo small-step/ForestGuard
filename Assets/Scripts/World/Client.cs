@@ -34,7 +34,7 @@ public class Client
         }
         catch (SocketException e)
         {
-            Console.WriteLine("SocketException: {0}", e);
+            Console.WriteLine("SocketException: {0}", e.Message);
             _connection.Close();
         }
     }
@@ -75,12 +75,12 @@ public class Client
             }
             catch (Exception e)
             {
-                Console.WriteLine("Revcive failed: {}", e.ToString());
+                Console.WriteLine("Revcive failed: {}", e.Message);
             }
         }
     }
 
-    public async void Send(EventType type, byte[] data)
+    public async void Send(RequestType type, byte[] data)
     {
         try
         {
@@ -89,7 +89,7 @@ public class Client
         }
         catch(Exception e)
         {
-            Console.WriteLine("Send failed: {}", e.ToString());
+            Console.WriteLine("Send failed: {}", e.Message);
         }
     }
 
