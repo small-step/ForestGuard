@@ -18,6 +18,14 @@ public class LoginController : MonoBehaviour {
         loginPanel = GameObject.Find("LoginPanel");
         signupPanel = GameObject.Find("SignupPanel");
         signupPanel.SetActive(false);
+
+        Client.Instance.Run();
+        
+    }
+
+    void OnApplicationQuit()
+    {
+        Client.Instance.Stop();
     }
 
     // Update is called once per frame
