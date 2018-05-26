@@ -8,7 +8,6 @@
 Assets/Cinemachine/
 Assets/AssetStoreTools*
 Config/socket.txt
-*.meta
 *.htm
 
 # Visual Studio cache directory
