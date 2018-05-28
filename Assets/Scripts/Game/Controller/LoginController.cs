@@ -78,9 +78,9 @@ public class LoginController : MonoBehaviour {
 
         if (login)
         {
-            var usr = new Account{ ID = acct, Password = psw };
-            Client.Instance.Send(RequestType.Login, Proto.Serialize(usr));
-            SceneManager.LoadSceneAsync(1);
+            var info = new Account{ ID = acct, Password = psw };
+            Client.Instance.Send(RequestType.Login, Proto.Serialize(info));
+            //SceneManager.LoadSceneAsync(1);
         }
     }
 
@@ -102,8 +102,7 @@ public class LoginController : MonoBehaviour {
         if (signUp)
         {
             var info = new UserInfo{ Account = acct, Password = psw, Nickname = ncn };
-            var data = Proto.Serialize(info);
-            Client.Instance.Send(RequestType.Regist, data);
+            Client.Instance.Send(RequestType.Regist, Proto.Serialize(info));
             //注册成功返回登陆界面
             if(UnityEditor.EditorUtility.DisplayDialog("Prompt", "Registration success", "Ok"))
             {

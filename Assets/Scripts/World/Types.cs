@@ -15,7 +15,10 @@ public enum RequestType : uint
 public enum ResponseType : uint
 {
     KeepAlive = 0,
-    RegistOk = 1,
-    RegistFailed = 2,
+	Regist_Ok = 1,
+	Regist_Fail = 2,
+	Login_Ok = 3,
+	Login_AcNotExist = 4,
+	Login_PwError = 5,
     MaxType
 }

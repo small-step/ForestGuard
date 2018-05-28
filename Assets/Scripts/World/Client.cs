@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Text;
+using UnityEngine;
 
 public class Client
 {
@@ -69,23 +70,31 @@ public class Client
 
     public async void Revcive()
     {
+        var header = new byte[8];
+        int numOfBytes = 0;
         while (true)
         {
             try
             {
-                var header = new byte[4];
-                await _stream.ReadAsync(header, 0, 4);
-                var ret = ParseHeader(header);
-                if (ret.Item2 == 0)
+                do
                 {
-                    Dispatcher.Handle(ret.Item1, new byte[0]);
-                }
-                else
-                {
-                    var data = new byte[ret.Item2];
-                    await _stream.ReadAsync(data, 0, data.Length);
-                    Dispatcher.Handle(ret.Item1, data);
-                }
+                    numOfBytes = _stream.Read(header, 0, header.Length);
+                    var ret = ParseHeader(uint.Parse(Encoding.UTF8.GetString(header, 0, numOfBytes)));
+                    Debug.Log(String.Format("type:{0}, length:{1}", ret.Item1, ret.Item2));
+                    if (ret.Item1 >= (uint)ResponseType.MaxType)
+                    {
+                    }
+                    if (ret.Item2 == 0)
+                    {
+                        Dispatcher.Handle(ret.Item1, new byte[0]);
+                    }
+                    else
+                    {
+                        var data = new byte[ret.Item2];
+                        numOfBytes = _stream.Read(data, 0, data.Length);
+                        Dispatcher.Handle(ret.Item1, data);
+                    }
+                } while(_stream.DataAvailable);
             }
             catch (Exception e)
             {
@@ -117,10 +126,10 @@ public class Client
         }
     }
 
-    private Tuple<uint, int> ParseHeader(byte[] header)
+    private Tuple<uint, int> ParseHeader(uint header)
     {
-        uint type = header[0];
-        int length = (header[2] << 8) | header[3];
+        uint type = (header & 0xff000000) >> 24;
+        int length = (int)(header & 0xffff);
         return new Tuple<uint, int>(type, length);
     }
 
