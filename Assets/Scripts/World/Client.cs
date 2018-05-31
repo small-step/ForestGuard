@@ -7,9 +7,9 @@ using System.Threading;
 using System.Text;
 using UnityEngine;
 
-public class Client
+public class Client : MonoBehaviour
 {
-
+    public static Client Instance = null;
     private static string _hostname;
     private static int _port;
 
@@ -19,7 +19,7 @@ public class Client
     private Thread _recvThread;
     private Thread _heartbeatThread;
 
-    private Client()
+    void Start()
     {
         string[] lines = System.IO.File.ReadAllLines(System.Environment.CurrentDirectory + "/Config/socket.txt");
         _hostname = lines[0].TrimEnd('\n');
@@ -37,21 +37,51 @@ public class Client
             Console.WriteLine("SocketException: {0}", e.Message);
             _connection.Close();
         }
+        Run();
     }
-
-    private class Inner
+    void Awake()
     {
-        static Inner() { }
-        internal static readonly Client instance = new Client();
-    }
+        if (Instance == null)
+            Instance = this;
 
-    public static Client Instance
-    {
-        get
-        {
-            return Inner.instance;
-        }
     }
+    void OnApplicationQuit()
+    {
+        Stop();
+    }
+    //private Client()
+    //{
+    //    string[] lines = System.IO.File.ReadAllLines(System.Environment.CurrentDirectory + "/Config/socket.txt");
+    //    _hostname = lines[0].TrimEnd('\n');
+    //    _port = int.Parse(lines[1].TrimEnd('\n'));
+
+    //    try
+    //    {
+    //        _connection = new TcpClient(_hostname, _port);
+    //        _stream = _connection.GetStream();
+    //        _stream.ReadTimeout = 15000; // 15s
+    //        Event.RegistEvent();
+    //    }
+    //    catch (SocketException e)
+    //    {
+    //        Console.WriteLine("SocketException: {0}", e.Message);
+    //        _connection.Close();
+    //    }
+    //}
+
+    //private class Inner
+    //{
+    //    static Inner() { }
+    //    internal static readonly Client instance = container.Resolve<Daztabase>();
+    //}
+
+    //public static Client Instance
+    //{
+    //    get
+    //    {
+    //        return Inner.instance;
+    //    }
+    //}
 
     public void Run()
     {
@@ -80,7 +110,7 @@ public class Client
                 {
                     numOfBytes = _stream.Read(header, 0, header.Length);
                     var ret = ParseHeader(uint.Parse(Encoding.UTF8.GetString(header, 0, numOfBytes)));
-                    Debug.Log(String.Format("type:{0}, length:{1}", ret.Item1, ret.Item2));
+                    //Debug.Log(String.Format("type:{0}, length:{1}", ret.Item1, ret.Item2));
                     if (ret.Item1 >= (uint)ResponseType.MaxType)
                     {
                     }

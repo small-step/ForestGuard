@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
-public class Dispatcher
+using UnityEngine;
+public class Dispatcher : MonoBehaviour
 {
     public delegate void EventHandler(byte[] data);
 

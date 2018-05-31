@@ -4,8 +4,11 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Event
+using World;
+
+public class Event : MonoBehaviour
 {
+
     public static void RegistEvent()
     {
         Dispatcher.Bind((uint)ResponseType.KeepAlive, KeepAlive);
@@ -18,7 +21,7 @@ public class Event
 
     public static void KeepAlive(byte[] msg)
     {
-        Debug.Log("keep alive.");
+        //Debug.Log("keep alive.");
     }
 
     public static void RegistOk(byte[] msg)
@@ -29,6 +32,8 @@ public class Event
     public static void RegistFailed(byte[] msg)
     {
         Debug.Log("Regist failed");
+        LoginController.State = 0;
+        LoginController.Message = "账号已被注册";
     }
 
     public static void LoginOk(byte[] msg)
@@ -39,10 +44,14 @@ public class Event
     public static void LoginNoAccount(byte[] msg)
     {
         Debug.Log("Account not exist");
+        LoginController.State = 0;
+        LoginController.Message = "账号不存在";
     }
 
     public static void LoginPasswordError(byte[] msg)
     {
         Debug.Log("Password error");
+        LoginController.State = 0;
+        LoginController.Message = "密码不正确";
     }
 }

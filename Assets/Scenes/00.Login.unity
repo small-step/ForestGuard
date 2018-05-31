@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 62635988}
   - component: {fileID: 62635987}
   m_Layer: 5
-  m_Name: Signup
+  m_Name: ToSignup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -343,7 +343,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 19a2afe770155ae4ca4ba30ce83aa85a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0997bae7b09260f4bab6c631799d6405, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -817,7 +817,7 @@ MonoBehaviour:
   m_LineType: 0
   m_HideMobileInput: 0
   m_CharacterValidation: 0
-  m_CharacterLimit: 0
+  m_CharacterLimit: 10
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls: []
@@ -1098,6 +1098,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 835457331fa945c48b523c16b4b27ae4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loginPanel: {fileID: 0}
+  signupPanel: {fileID: 0}
 --- !u!1 &593835223
 GameObject:
   m_ObjectHideFlags: 0
@@ -1243,6 +1245,8 @@ GameObject:
   - component: {fileID: 626629810}
   - component: {fileID: 626629809}
   - component: {fileID: 626629808}
+  - component: {fileID: 626629812}
+  - component: {fileID: 626629813}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1326,6 +1330,33 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &626629812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 626629807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fd6081cd802d9a4492cfd33855b653d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &626629813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 626629807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1e6c06aa7e57e844aed31046908191e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LoginFirstSelected: {fileID: 0}
+  SignupFirstSelected: {fileID: 0}
+  Login: {fileID: 0}
+  Signup: {fileID: 0}
+  isLogin: 0
 --- !u!1 &658464731
 GameObject:
   m_ObjectHideFlags: 0
@@ -3082,7 +3113,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 70, y: -98}
+  m_AnchoredPosition: {x: 70, y: -95}
   m_SizeDelta: {x: 100, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1772659332
@@ -3125,7 +3156,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 553224757}
-        m_MethodName: SignUP
+        m_MethodName: OnSignupClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3156,7 +3187,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 19a2afe770155ae4ca4ba30ce83aa85a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0997bae7b09260f4bab6c631799d6405, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3395,7 +3426,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 553224757}
-        m_MethodName: Login
+        m_MethodName: OnLoginClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3709,7 +3740,7 @@ MonoBehaviour:
   m_Script: {fileID: -619905303, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 1763215990}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &2117805820
