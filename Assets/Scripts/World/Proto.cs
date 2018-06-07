@@ -2,7 +2,7 @@
 using System.IO;
 using ProtoBuf;
 
-namespace World
+namespace ForestGuard
 {
     public class Proto
     {

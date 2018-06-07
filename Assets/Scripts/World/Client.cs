@@ -7,182 +7,185 @@ using System.Threading;
 using System.Text;
 using UnityEngine;
 
-public class Client : MonoBehaviour
+namespace ForestGuard
 {
-    public static Client Instance = null;
-    private static string _hostname;
-    private static int _port;
-
-    private TcpClient _connection;
-    private NetworkStream _stream;
-
-    private Thread _recvThread;
-    private Thread _heartbeatThread;
-
-    void Start()
+    public class Client : MonoBehaviour
     {
-        string[] lines = System.IO.File.ReadAllLines(System.Environment.CurrentDirectory + "/Config/socket.txt");
-        _hostname = lines[0].TrimEnd('\n');
-        _port = int.Parse(lines[1].TrimEnd('\n'));
+        public static Client Instance = null;
+        private static string _hostname;
+        private static int _port;
 
-        try
+        private TcpClient _connection;
+        private NetworkStream _stream;
+
+        private Thread _recvThread;
+        private Thread _heartbeatThread;
+
+        void Start()
         {
-            _connection = new TcpClient(_hostname, _port);
-            _stream = _connection.GetStream();
-            _stream.ReadTimeout = 15000; // 15s
-            Event.RegistEvent();
+            string[] lines = System.IO.File.ReadAllLines(System.Environment.CurrentDirectory + "/Config/socket.txt");
+            _hostname = lines[0].TrimEnd('\n');
+            _port = int.Parse(lines[1].TrimEnd('\n'));
+
+            try
+            {
+                _connection = new TcpClient(_hostname, _port);
+                _stream = _connection.GetStream();
+                _stream.ReadTimeout = 15000; // 15s
+                Event.RegistEvent();
+            }
+            catch (SocketException e)
+            {
+                Console.WriteLine("SocketException: {0}", e.Message);
+                _connection.Close();
+            }
+            Run();
         }
-        catch (SocketException e)
+        void Awake()
         {
-            Console.WriteLine("SocketException: {0}", e.Message);
+            if (Instance == null)
+                Instance = this;
+
+        }
+        void OnApplicationQuit()
+        {
+            Stop();
+        }
+        //private Client()
+        //{
+        //    string[] lines = System.IO.File.ReadAllLines(System.Environment.CurrentDirectory + "/Config/socket.txt");
+        //    _hostname = lines[0].TrimEnd('\n');
+        //    _port = int.Parse(lines[1].TrimEnd('\n'));
+
+        //    try
+        //    {
+        //        _connection = new TcpClient(_hostname, _port);
+        //        _stream = _connection.GetStream();
+        //        _stream.ReadTimeout = 15000; // 15s
+        //        Event.RegistEvent();
+        //    }
+        //    catch (SocketException e)
+        //    {
+        //        Console.WriteLine("SocketException: {0}", e.Message);
+        //        _connection.Close();
+        //    }
+        //}
+
+        //private class Inner
+        //{
+        //    static Inner() { }
+        //    internal static readonly Client instance = container.Resolve<Daztabase>();
+        //}
+
+        //public static Client Instance
+        //{
+        //    get
+        //    {
+        //        return Inner.instance;
+        //    }
+        //}
+
+        public void Run()
+        {
+            _recvThread = new Thread(Revcive);
+            _recvThread.Start();
+            _heartbeatThread = new Thread(HeartBeat);
+            _heartbeatThread.Start();
+        }
+
+        public void Stop()
+        {
+            _recvThread.Abort();
+            _heartbeatThread.Abort();
             _connection.Close();
         }
-        Run();
-    }
-    void Awake()
-    {
-        if (Instance == null)
-            Instance = this;
 
-    }
-    void OnApplicationQuit()
-    {
-        Stop();
-    }
-    //private Client()
-    //{
-    //    string[] lines = System.IO.File.ReadAllLines(System.Environment.CurrentDirectory + "/Config/socket.txt");
-    //    _hostname = lines[0].TrimEnd('\n');
-    //    _port = int.Parse(lines[1].TrimEnd('\n'));
+        public async void Revcive()
+        {
+            var header = new byte[8];
+            int numOfBytes = 0;
+            while (true)
+            {
+                try
+                {
+                    do
+                    {
+                        numOfBytes = _stream.Read(header, 0, header.Length);
+                        var ret = ParseHeader(uint.Parse(Encoding.UTF8.GetString(header, 0, numOfBytes)));
+                        //Debug.Log(String.Format("type:{0}, length:{1}", ret.Item1, ret.Item2));
+                        if (ret.Item1 >= (uint)ResponseType.MaxType)
+                        {
+                        }
+                        if (ret.Item2 == 0)
+                        {
+                            Dispatcher.Handle(ret.Item1, new byte[0]);
+                        }
+                        else
+                        {
+                            var data = new byte[ret.Item2];
+                            numOfBytes = _stream.Read(data, 0, data.Length);
+                            Dispatcher.Handle(ret.Item1, data);
+                        }
+                    } while (_stream.DataAvailable);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Revcive failed: {}", e.Message);
+                }
+            }
+        }
 
-    //    try
-    //    {
-    //        _connection = new TcpClient(_hostname, _port);
-    //        _stream = _connection.GetStream();
-    //        _stream.ReadTimeout = 15000; // 15s
-    //        Event.RegistEvent();
-    //    }
-    //    catch (SocketException e)
-    //    {
-    //        Console.WriteLine("SocketException: {0}", e.Message);
-    //        _connection.Close();
-    //    }
-    //}
-
-    //private class Inner
-    //{
-    //    static Inner() { }
-    //    internal static readonly Client instance = container.Resolve<Daztabase>();
-    //}
-
-    //public static Client Instance
-    //{
-    //    get
-    //    {
-    //        return Inner.instance;
-    //    }
-    //}
-
-    public void Run()
-    {
-        _recvThread = new Thread(Revcive);
-        _recvThread.Start();
-        _heartbeatThread = new Thread(HeartBeat);
-        _heartbeatThread.Start();
-    }
-
-    public void Stop()
-    {
-        _recvThread.Abort();
-        _heartbeatThread.Abort();
-        _connection.Close();
-    }
-
-    public async void Revcive()
-    {
-        var header = new byte[8];
-        int numOfBytes = 0;
-        while (true)
+        public async void Send(RequestType type, byte[] data)
         {
             try
             {
-                do
-                {
-                    numOfBytes = _stream.Read(header, 0, header.Length);
-                    var ret = ParseHeader(uint.Parse(Encoding.UTF8.GetString(header, 0, numOfBytes)));
-                    //Debug.Log(String.Format("type:{0}, length:{1}", ret.Item1, ret.Item2));
-                    if (ret.Item1 >= (uint)ResponseType.MaxType)
-                    {
-                    }
-                    if (ret.Item2 == 0)
-                    {
-                        Dispatcher.Handle(ret.Item1, new byte[0]);
-                    }
-                    else
-                    {
-                        var data = new byte[ret.Item2];
-                        numOfBytes = _stream.Read(data, 0, data.Length);
-                        Dispatcher.Handle(ret.Item1, data);
-                    }
-                } while(_stream.DataAvailable);
+                var packet = MakePacket((uint)(type), data);
+                await _stream.WriteAsync(packet, 0, packet.Length);
+                //await _stream.FlushAsync();
             }
             catch (Exception e)
             {
-                Console.WriteLine("Revcive failed: {}", e.Message);
+                Console.WriteLine("Send failed: {}", e.Message);
             }
         }
-    }
 
-    public async void Send(RequestType type, byte[] data)
-    {
-        try
+        public void HeartBeat()
         {
-            var packet = MakePacket((uint)(type), data);
-            await _stream.WriteAsync(packet, 0, packet.Length);
-            //await _stream.FlushAsync();
+            while (true)
+            {
+                Send(RequestType.KeepAlive, new byte[0]);
+                Thread.Sleep(3000);
+            }
         }
-        catch(Exception e)
+
+        private Tuple<uint, int> ParseHeader(uint header)
         {
-            Console.WriteLine("Send failed: {}", e.Message);
+            uint type = (header & 0xff000000) >> 24;
+            int length = (int)(header & 0xffff);
+            return new Tuple<uint, int>(type, length);
         }
-    }
 
-    public void HeartBeat()
-    {
-        while (true)
+        private byte[] MakePacket(uint type, byte[] data)
         {
-            Send(RequestType.KeepAlive, new byte[0]);
-            Thread.Sleep(3000);
-        }
-    }
-
-    private Tuple<uint, int> ParseHeader(uint header)
-    {
-        uint type = (header & 0xff000000) >> 24;
-        int length = (int)(header & 0xffff);
-        return new Tuple<uint, int>(type, length);
-    }
-
-    private byte[] MakePacket(uint type, byte[] data)
-    {
-        int byte_count = data.Length;
-        //Console.WriteLine(data.Length);
-        byte[] int_bytes = BitConverter.GetBytes(byte_count);
-        if (BitConverter.IsLittleEndian)
-            Array.Reverse(int_bytes);
-        byte[] result = int_bytes;
-        //Console.WriteLine(BitConverter.ToString(result));
-        byte[] header = new byte[4]
-        {
+            int byte_count = data.Length;
+            //Console.WriteLine(data.Length);
+            byte[] int_bytes = BitConverter.GetBytes(byte_count);
+            if (BitConverter.IsLittleEndian)
+                Array.Reverse(int_bytes);
+            byte[] result = int_bytes;
+            //Console.WriteLine(BitConverter.ToString(result));
+            byte[] header = new byte[4]
+            {
             (byte)(type & 0xff), 0x33, result[2], result[3]
-        };
-        if (byte_count == 0)
-        {
-            return header;
+            };
+            if (byte_count == 0)
+            {
+                return header;
+            }
+            var packet = new byte[header.Length + byte_count];
+            Buffer.BlockCopy(header, 0, packet, 0, header.Length);
+            Buffer.BlockCopy(data, 0, packet, header.Length * sizeof(byte), byte_count);
+            return packet;
         }
-        var packet = new byte[header.Length + byte_count];
-        Buffer.BlockCopy(header, 0, packet, 0, header.Length);
-        Buffer.BlockCopy(data, 0, packet, header.Length * sizeof(byte), byte_count);
-        return packet;
     }
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+using ForestGuard;
+
 public class LobbyController : MonoBehaviour {
 
 	// Use this for initialization
@@ -18,7 +20,7 @@ public class LobbyController : MonoBehaviour {
             }
             else if(btn.name == "Enter")
             {
-                btn.onClick.AddListener(EnterRoom);
+                btn.onClick.AddListener(QuickEnter);
             }
         }
     }
@@ -31,10 +33,16 @@ public class LobbyController : MonoBehaviour {
 
     public void CreateRoom()
     {
-
-    }
-    public void EnterRoom()
-    {
         SceneManager.LoadSceneAsync(2);
     }
+    public void QuickEnter()
+    {
+        Client.Instance.Send(RequestType.MaxType, new byte [0]);
+    }
+
+    public void FetchRoomList()
+    {
+
+    }
+
 }

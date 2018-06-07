@@ -3,10 +3,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-using World;
+using ForestGuard;
 
 public class LoginController : MonoBehaviour {
-
 
     public static int State = -1;
     public static string Message = null;
@@ -157,6 +156,11 @@ public class LoginController : MonoBehaviour {
             signUp = false;
             MessageShow("输入栏不能为空");
             //UnityEditor.EditorUtility.DisplayDialog("Warning", "Input Field can't be empty", "Ok");
+        }
+        else if(GameObject.Find("passwordAField").GetComponent<InputField>().text != psw)
+        {
+            signUp = false;
+            MessageShow("两次输入不一致");
         }
 
         if (signUp)
