@@ -13,6 +13,8 @@ public class InputControler : MonoBehaviour {
     public Button Login;
     public Button Signup;
     public bool isLogin;
+    //private GameObject tempHint;
+    //private bool isfocused = false;
 
     void Awake()
     {
@@ -56,6 +58,26 @@ public class InputControler : MonoBehaviour {
                 Signup.onClick.Invoke();
             }
         }
+        //if(LoginFirstSelected.isFocused == true)
+        //{
+        //    isfocused = true;
+        //}
+        //else
+        //{
+        //    if(isfocused == true)
+        //    {
+        //        isfocused = false;
+        //        if (tempHint == null)
+        //        {
+        //            Debug.Log("do");
+        //            tempHint = Instantiate(Resources.Load("UI/Prefabs/hint")) as GameObject;
+        //            Debug.Log(tempHint);
+        //            tempHint.GetComponent<Transform>().SetParent(GameObject.Find("AccountField").GetComponent<Transform>(), true);
+        //            tempHint.GetComponent<Transform>().localPosition = new Vector3(0, -30, 0);
+        //            tempHint.GetComponent<Text>().text = "两次密码输入不同";
+        //        }
+        //    }
+        //}
     }
 
 }

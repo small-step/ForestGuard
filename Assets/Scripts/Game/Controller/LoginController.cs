@@ -75,9 +75,14 @@ public class LoginController : MonoBehaviour {
         {
             case 0:
                 MessageShow(Message); break;
+            case 1:
+                JumpLoginPanel();break;
+            case 2:
+                SceneManager.LoadSceneAsync(1); break;
             default:
                 return;
         }
+        State = -1;
     }
 
     void OnApplicationQuit()
@@ -124,7 +129,8 @@ public class LoginController : MonoBehaviour {
         if (String.IsNullOrEmpty(acct) || String.IsNullOrEmpty(psw))
         {
             login = false;
-            UnityEditor.EditorUtility.DisplayDialog("Warning", "Input Field can't be empty", "Ok");
+            MessageShow("输入栏不能为空");
+            //UnityEditor.EditorUtility.DisplayDialog("Warning", "Input Field can't be empty", "Ok");
             GameObject.Find("PasswordField").GetComponent<InputField>().text = null;
         }
 
@@ -149,7 +155,8 @@ public class LoginController : MonoBehaviour {
         if (String.IsNullOrEmpty(acct) || String.IsNullOrEmpty(psw) || String.IsNullOrEmpty(ncn))
         {
             signUp = false;
-            UnityEditor.EditorUtility.DisplayDialog("Warning", "Input Field can't be empty", "Ok");
+            MessageShow("输入栏不能为空");
+            //UnityEditor.EditorUtility.DisplayDialog("Warning", "Input Field can't be empty", "Ok");
         }
 
         if (signUp)
@@ -171,7 +178,6 @@ public class LoginController : MonoBehaviour {
             tempPrompt = Instantiate(Resources.Load("UI/Prefabs/Prompt")) as GameObject;
             tempPrompt.GetComponent<Transform>().SetParent(GameObject.Find("Canvas").GetComponent<Transform>(), true);
             tempPrompt.GetComponentInChildren<Text>().text = msg;
-            State = -1;
         }
     }
 }

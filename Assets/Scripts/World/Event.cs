@@ -26,6 +26,7 @@ public class Event : MonoBehaviour
 
     public static void RegistOk(byte[] msg)
     {
+        LoginController.State = 1;
         Debug.Log("Regist successed");
     }
 
@@ -38,6 +39,7 @@ public class Event : MonoBehaviour
 
     public static void LoginOk(byte[] msg)
     {
+        LoginController.State = 2;
         //SceneManager.LoadSceneAsync(1);
     }
     
