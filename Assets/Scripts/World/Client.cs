@@ -9,9 +9,8 @@ using UnityEngine;
 
 namespace ForestGuard
 {
-    public class Client : MonoBehaviour
+    public class Client
     {
-        public static Client Instance = null;
         private static string _hostname;
         private static int _port;
 
@@ -20,8 +19,8 @@ namespace ForestGuard
 
         private Thread _recvThread;
         private Thread _heartbeatThread;
-
-        void Start()
+        
+        private Client()
         {
             string[] lines = System.IO.File.ReadAllLines(System.Environment.CurrentDirectory + "/Config/socket.txt");
             _hostname = lines[0].TrimEnd('\n');
@@ -33,63 +32,33 @@ namespace ForestGuard
                 _stream = _connection.GetStream();
                 _stream.ReadTimeout = 15000; // 15s
                 Event.RegistEvent();
+                _recvThread = new Thread(Revcive);
+                _heartbeatThread = new Thread(HeartBeat);
             }
             catch (SocketException e)
             {
                 Console.WriteLine("SocketException: {0}", e.Message);
                 _connection.Close();
             }
-            Run();
         }
-        void Awake()
+
+        private class Inner
         {
-            if (Instance == null)
-                Instance = this;
-
+            static Inner() { }
+            internal static readonly Client instance = new Client();
         }
-        void OnApplicationQuit()
+
+        public static Client Instance
         {
-            Stop();
+            get
+            {
+                return Inner.instance;
+            }
         }
-        //private Client()
-        //{
-        //    string[] lines = System.IO.File.ReadAllLines(System.Environment.CurrentDirectory + "/Config/socket.txt");
-        //    _hostname = lines[0].TrimEnd('\n');
-        //    _port = int.Parse(lines[1].TrimEnd('\n'));
-
-        //    try
-        //    {
-        //        _connection = new TcpClient(_hostname, _port);
-        //        _stream = _connection.GetStream();
-        //        _stream.ReadTimeout = 15000; // 15s
-        //        Event.RegistEvent();
-        //    }
-        //    catch (SocketException e)
-        //    {
-        //        Console.WriteLine("SocketException: {0}", e.Message);
-        //        _connection.Close();
-        //    }
-        //}
-
-        //private class Inner
-        //{
-        //    static Inner() { }
-        //    internal static readonly Client instance = container.Resolve<Daztabase>();
-        //}
-
-        //public static Client Instance
-        //{
-        //    get
-        //    {
-        //        return Inner.instance;
-        //    }
-        //}
 
         public void Run()
         {
-            _recvThread = new Thread(Revcive);
             _recvThread.Start();
-            _heartbeatThread = new Thread(HeartBeat);
             _heartbeatThread.Start();
         }
 
@@ -100,9 +69,14 @@ namespace ForestGuard
             _connection.Close();
         }
 
-        public async void Revcive()
+        public bool IsThreadAlive()
         {
-            var header = new byte[8];
+            return _recvThread.IsAlive;
+        }
+
+        public void Revcive()
+        {
+            var header = new byte[4];
             int numOfBytes = 0;
             while (true)
             {
@@ -111,11 +85,7 @@ namespace ForestGuard
                     do
                     {
                         numOfBytes = _stream.Read(header, 0, header.Length);
-                        var ret = ParseHeader(uint.Parse(Encoding.UTF8.GetString(header, 0, numOfBytes)));
-                        //Debug.Log(String.Format("type:{0}, length:{1}", ret.Item1, ret.Item2));
-                        if (ret.Item1 >= (uint)ResponseType.MaxType)
-                        {
-                        }
+                        var ret = ParseHeader(header);
                         if (ret.Item2 == 0)
                         {
                             Dispatcher.Handle(ret.Item1, new byte[0]);
@@ -130,7 +100,8 @@ namespace ForestGuard
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Revcive failed: {}", e.Message);
+
+                    Debug.Log("revc: " + e.Message);
                 }
             }
         }
@@ -145,7 +116,7 @@ namespace ForestGuard
             }
             catch (Exception e)
             {
-                Console.WriteLine("Send failed: {}", e.Message);
+                Debug.Log("send: " + e.Message);
             }
         }
 
@@ -158,10 +129,10 @@ namespace ForestGuard
             }
         }
 
-        private Tuple<uint, int> ParseHeader(uint header)
+        private Tuple<uint, int> ParseHeader(byte[] header)
         {
-            uint type = (header & 0xff000000) >> 24;
-            int length = (int)(header & 0xffff);
+            uint type = header[0];
+            int length = (header[2] << 8)| header[3];
             return new Tuple<uint, int>(type, length);
         }
 

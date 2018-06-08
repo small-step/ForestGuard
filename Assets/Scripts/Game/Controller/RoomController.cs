@@ -4,29 +4,24 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+using ForestGuard;
+
 public class RoomController : MonoBehaviour {
 
     // Use this for initialization
     void Start()
     {
-        var btns = GetComponentsInChildren<Button>();
-        foreach(var btn in btns)
-        {
-            if(btn.name == "EnterGame")
-            {
-                btn.onClick.AddListener(EnterGame);
-            }
-        }
     }
 
     // Update is called once per frame
     void Update()
     {
-
     }
 
-    public void EnterGame()
+    public void ReturnLobby()
     {
-        SceneManager.LoadSceneAsync(3);
+        var info = new RoomSeat { RoomId = User.RoomId, SeatId = User.SeatId };
+        Client.Instance.Send(RequestType.LeaveRoom, Proto.Serialize(info));
+        SceneManager.LoadSceneAsync(1);
     }
 }

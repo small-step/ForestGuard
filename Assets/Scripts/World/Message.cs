@@ -6,10 +6,20 @@ using ProtoBuf;
 namespace ForestGuard
 {
     [ProtoContract(SkipConstructor = true)]
+    public class ID
+    {
+        [ProtoMember(1)]
+        public uint Id { get; set; }
+
+        [ProtoMember(2)]
+        public string Nickname { get; set; }
+    }
+
+    [ProtoContract(SkipConstructor = true)]
     public class Account
     {
         [ProtoMember(1)]
-        public string ID { get; set; }
+        public string Id { get; set; }
 
         [ProtoMember(2)]
         public string Password { get; set; }
@@ -32,14 +42,14 @@ namespace ForestGuard
     public class PlayerInfo
     {
         [ProtoMember(1)]
-        public string Account { get; set; }
+        public uint Id { get; set; }
 
         [ProtoMember(2)]
         public string Nickname { get; set; }
     }
 
     [ProtoContract(SkipConstructor = true)]
-    class RoomInfo
+    public class RoomInfo
     {
         [ProtoMember(1)]
         public uint Id { get; set; }
@@ -49,5 +59,32 @@ namespace ForestGuard
 
         [ProtoMember(3)]
         public List<PlayerInfo> PlayList { get; set; }
+    }
+
+    [ProtoContract(SkipConstructor = true)]
+    public class RoomList
+    {
+        [ProtoMember(1)]
+        public List<RoomInfo> List { get; set; }
+    }
+
+    [ProtoContract(SkipConstructor = true)]
+    public class EnterRoomInfo
+    {
+        [ProtoMember(1)]
+        public uint RoomId { get; set; }
+
+        [ProtoMember(2)]
+        public uint UserId { get; set; }
+    }
+
+    [ProtoContract(SkipConstructor = true)]
+    public class RoomSeat
+    {
+        [ProtoMember(1)]
+        public uint RoomId { get; set; }
+
+        [ProtoMember(2)]
+        public uint SeatId { get; set; }
     }
 }

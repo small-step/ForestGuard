@@ -18,6 +18,13 @@ namespace ForestGuard
             Dispatcher.Bind((uint)ResponseType.Login_Ok, LoginOk);
             Dispatcher.Bind((uint)ResponseType.Login_AcNotExist, LoginNoAccount);
             Dispatcher.Bind((uint)ResponseType.Login_PwError, LoginPasswordError);
+            Dispatcher.Bind((uint)ResponseType.FetchRoomList, FetchRoomList);
+            Dispatcher.Bind((uint)ResponseType.CreateRoom_Ok, CreateRoomOk);
+            Dispatcher.Bind((uint)ResponseType.CreateRoom_Fail, CreateRoomFail);
+            Dispatcher.Bind((uint)ResponseType.EnterRoom_Ok, EnterRoomOk);
+            Dispatcher.Bind((uint)ResponseType.EnterRoom_Full, EnterRoomFull);
+            Dispatcher.Bind((uint)ResponseType.EnterRoom_Started, EnterRoomStarted);
+            Dispatcher.Bind((uint)ResponseType.EnterRoom_NotExist, EnterRoomNotExist);
         }
 
         public static void KeepAlive(byte[] msg)
@@ -41,7 +48,9 @@ namespace ForestGuard
         public static void LoginOk(byte[] msg)
         {
             LoginController.State = 2;
-            //SceneManager.LoadSceneAsync(1);
+            var id = Proto.Deserialize<ID>(msg);
+            User.Id = id.Id;
+            User.Nickname = id.Nickname;
         }
 
         public static void LoginNoAccount(byte[] msg)
@@ -56,6 +65,54 @@ namespace ForestGuard
             Debug.Log("Password error");
             LoginController.State = 0;
             LoginController.Message = "密码不正确";
+        }
+
+        public static void FetchRoomList(byte[] msg)
+        {
+            LobbyController.RoomList = Proto.Deserialize<RoomList>(msg);
+            LobbyController.RoomState = 1;
+            string log = string.Format("room num: {0}", LobbyController.RoomList.List.Count);
+            Debug.Log(log);
+        }
+
+        public static void CreateRoomOk(byte[] msg)
+        {
+            var seat = Proto.Deserialize<RoomSeat>(msg);
+            User.RoomId = seat.RoomId;
+            User.SeatId = seat.SeatId;
+            LobbyController.RoomState = 2;
+            string log = string.Format("room id: {0}, seat id: {1}", seat.RoomId, seat.SeatId);
+            Debug.Log(log);
+        }
+
+        public static void CreateRoomFail(byte[] msg)
+        {
+            Debug.Log("Create room failed");
+        }
+
+        public static void EnterRoomOk(byte[] msg)
+        {
+            var seat = Proto.Deserialize<RoomSeat>(msg);
+            User.RoomId = seat.RoomId;
+            User.SeatId = seat.SeatId;
+            LobbyController.RoomState = 2;
+            string log = string.Format("room id: {0}, seat id: {1}", seat.RoomId, seat.SeatId);
+            Debug.Log(log);
+        }
+
+        public static void EnterRoomFull(byte[] msg)
+        {
+            Debug.Log("Room is full");
+        }
+
+        public static void EnterRoomStarted(byte[] msg)
+        {
+            Debug.Log("Room started the game");
+        }
+
+        public static void EnterRoomNotExist(byte[] msg)
+        {
+            Debug.Log("Room not exist");
         }
     }
 }

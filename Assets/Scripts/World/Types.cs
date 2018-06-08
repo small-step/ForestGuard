@@ -11,9 +11,10 @@ namespace ForestGuard
         KeepAlive = 0,
         Regist = 1,
         Login = 2,
-        FetchRoomLisy = 3,
+        FetchRoomList = 3,
         CreateRoom = 4,
         EnterRoom = 5,
+        LeaveRoom = 6,
         MaxType
     }
 

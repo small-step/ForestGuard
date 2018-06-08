@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 222696665875561576}
   - component: {fileID: 114737132414086656}
   m_Layer: 5
-  m_Name: Text
+  m_Name: RoomStatus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 114509729068416616}
   m_Layer: 5
   m_Name: Room
-  m_TagString: Untagged
+  m_TagString: Room
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -251,7 +251,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 1/4
+  m_Text: 0/4
 --- !u!222 &222147415581312884
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -309,7 +309,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 30.38, y: 16}
+  m_AnchoredPosition: {x: 30.379997, y: 16}
   m_SizeDelta: {x: -83.3, y: -52}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224629522376589790
@@ -348,6 +348,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -143, y: 109}
+  m_AnchoredPosition: {x: -152, y: 110}
   m_SizeDelta: {x: 250, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}

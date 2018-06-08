@@ -15,43 +15,7 @@ public class LoginController : MonoBehaviour {
     private string acct;
     private string psw;
     private string ncn;
-    //public GameObject Prompt;
     private GameObject tempPrompt;
-
-    //private static int lc_referenceCount = 0;
-    //private static LoginController lc_instance;
-    //public static LoginController Instance
-    //{
-    //    get
-    //    {
-    //        if (lc_instance == null)
-    //            Debug.LogError("未创建实例");
-    //        return lc_instance;
-    //    }
-    //}
-
-    //void Awake()
-    //{
-    //    lc_referenceCount++;
-    //    if (lc_referenceCount > 1)
-    //    {
-    //        DestroyImmediate(this.gameObject);
-    //        return;
-    //    }
-
-    //    lc_instance = this;
-    //    // Use this line if you need the object to persist across scenes
-    //    DontDestroyOnLoad(this.gameObject);
-    //}
-
-    //void OnDestroy()
-    //{
-    //    lc_referenceCount--;
-    //    if (lc_referenceCount == 0)
-    //    {
-    //        lc_instance = null;
-    //    }
-    //}
 
     // Use this for initialization
     void Start ()
@@ -64,7 +28,7 @@ public class LoginController : MonoBehaviour {
         InputControler.Instance.Signup = GameObject.Find("SignUp").GetComponent<Button>();
         signupPanel.SetActive(false);
         InputControler.Instance.isLogin = true;
-        //Client.Instance.Run();
+        Client.Instance.Run();
     }
 
     // Update is called once per frame
@@ -86,24 +50,26 @@ public class LoginController : MonoBehaviour {
 
     void OnApplicationQuit()
     {
-       //Client.Instance.Stop();
+       Client.Instance.Stop();
     }
 
-    public void SetLoginPanelVisible(bool visible)
-    {
-        loginPanel.SetActive(visible);
-    }
+    //public void SetLoginPanelVisible(bool visible)
+    //{
+    //    loginPanel.SetActive(visible);
+    //}
 
-    public void SetSignupPanelVisible(bool visible)
-    {
-        signupPanel.SetActive(visible);
-    }
+    //public void SetSignupPanelVisible(bool visible)
+    //{
+    //    signupPanel.SetActive(visible);
+    //}
 
     public void JumpLoginPanel()
     {
         Debug.Log("JumpLogin");
-        SetLoginPanelVisible(true);
-        SetSignupPanelVisible(false);
+        loginPanel.SetActive(true);
+        signupPanel.SetActive(false);
+        //SetLoginPanelVisible(true);
+        //SetSignupPanelVisible(false);
         InputControler.Instance.LoginFirstSelected.Select();
         InputControler.Instance.isLogin = true;
     }
@@ -111,8 +77,10 @@ public class LoginController : MonoBehaviour {
     public  void JumpSignupPanel()
     {
         Debug.Log("JumpSignup");
-        SetSignupPanelVisible(true);
-        SetLoginPanelVisible(false);
+        signupPanel.SetActive(true);
+        loginPanel.SetActive(false);
+        //SetSignupPanelVisible(true);
+        //SetLoginPanelVisible(false);
         InputControler.Instance.SignupFirstSelected.Select();
         InputControler.Instance.isLogin = false;
     }
@@ -135,7 +103,7 @@ public class LoginController : MonoBehaviour {
 
         if (login)
         {
-            var info = new Account { ID = acct, Password = psw };
+            var info = new Account { Id = acct, Password = psw };
             Client.Instance.Send(RequestType.Login, Proto.Serialize(info));
             //SceneManager.LoadSceneAsync(1);
         }
@@ -160,7 +128,7 @@ public class LoginController : MonoBehaviour {
         else if(GameObject.Find("passwordAField").GetComponent<InputField>().text != psw)
         {
             signUp = false;
-            MessageShow("两次输入不一致");
+            MessageShow("两次密码输入不一致");
         }
 
         if (signUp)
@@ -179,8 +147,8 @@ public class LoginController : MonoBehaviour {
     {
         if(tempPrompt == null)
         {
-            tempPrompt = Instantiate(Resources.Load("UI/Prefabs/Prompt")) as GameObject;
-            tempPrompt.GetComponent<Transform>().SetParent(GameObject.Find("Canvas").GetComponent<Transform>(), true);
+            tempPrompt = Instantiate(Resources.Load("UI/Prefabs/PromptPanel")) as GameObject;
+            tempPrompt.GetComponent<Transform>().SetParent(GameObject.Find("Background").GetComponent<Transform>(), false);
             tempPrompt.GetComponentInChildren<Text>().text = msg;
         }
     }
