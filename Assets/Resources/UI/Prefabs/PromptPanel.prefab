@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 224026660338333302}
   - component: {fileID: 222804960219703268}
   - component: {fileID: 114221649048537022}
-  - component: {fileID: 114850282040540152}
+  - component: {fileID: 114800518654858572}
   m_Layer: 5
   m_Name: PromptPanel
   m_TagString: Untagged
@@ -174,7 +174,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114850282040540152}
+      - m_Target: {fileID: 114800518654858572}
         m_MethodName: RemovePrompt
         m_Mode: 1
         m_Arguments:
@@ -247,7 +247,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 
---- !u!114 &114850282040540152
+--- !u!114 &114800518654858572
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -255,7 +255,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1070856039329604}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c4bca672c5ec01438533eb65e4a334c, type: 3}
+  m_Script: {fileID: 11500000, guid: 7172155a0d576534f9723f2b10c1a628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!222 &222118891781399760

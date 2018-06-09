@@ -67,10 +67,17 @@ namespace ForestGuard
             LoginController.Message = "密码不正确";
         }
 
+        //public static void LoginAlreadyLogged(byte[] msg)
+        //{
+        //    Debug.Log("Account Already Logged in");
+        //    LoginController.State = 0;
+        //    LoginController.Message = "账号已经登陆";
+        //}
+
         public static void FetchRoomList(byte[] msg)
         {
             LobbyController.RoomList = Proto.Deserialize<RoomList>(msg);
-            LobbyController.RoomState = 1;
+            LobbyController.LobbyState = 1;
             string log = string.Format("room num: {0}", LobbyController.RoomList.List.Count);
             Debug.Log(log);
         }
@@ -80,7 +87,7 @@ namespace ForestGuard
             var seat = Proto.Deserialize<RoomSeat>(msg);
             User.RoomId = seat.RoomId;
             User.SeatId = seat.SeatId;
-            LobbyController.RoomState = 2;
+            LobbyController.LobbyState = 2;
             string log = string.Format("room id: {0}, seat id: {1}", seat.RoomId, seat.SeatId);
             Debug.Log(log);
         }
@@ -95,7 +102,7 @@ namespace ForestGuard
             var seat = Proto.Deserialize<RoomSeat>(msg);
             User.RoomId = seat.RoomId;
             User.SeatId = seat.SeatId;
-            LobbyController.RoomState = 2;
+            LobbyController.LobbyState = 2;
             string log = string.Format("room id: {0}, seat id: {1}", seat.RoomId, seat.SeatId);
             Debug.Log(log);
         }
@@ -114,5 +121,10 @@ namespace ForestGuard
         {
             Debug.Log("Room not exist");
         }
+
+        //public static void UpdateRoomMembers(byte[] msg)
+        //{
+        //    Debug.Log("Get room members list");
+        //}
     }
 }

@@ -15,7 +15,8 @@ public class LoginController : MonoBehaviour {
     private string acct;
     private string psw;
     private string ncn;
-    private GameObject tempPrompt;
+    //private GameObject tempPrompt;
+    public static PromptController promptCtrl = new PromptController();
 
     // Use this for initialization
     void Start ()
@@ -145,11 +146,6 @@ public class LoginController : MonoBehaviour {
 
     public void MessageShow(string msg)
     {
-        if(tempPrompt == null)
-        {
-            tempPrompt = Instantiate(Resources.Load("UI/Prefabs/PromptPanel")) as GameObject;
-            tempPrompt.GetComponent<Transform>().SetParent(GameObject.Find("Background").GetComponent<Transform>(), false);
-            tempPrompt.GetComponentInChildren<Text>().text = msg;
-        }
+        promptCtrl.ShowPrompt(msg);
     }
 }

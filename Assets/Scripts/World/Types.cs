@@ -26,6 +26,7 @@ namespace ForestGuard
         Login_Ok = 3,
         Login_PwError = 4,
         Login_AcNotExist = 5,
+        //Login_AlreadyLogged = 6,
         FetchRoomList = 6,
         CreateRoom_Ok = 7,
         CreateRoom_Fail = 8,
@@ -33,6 +34,7 @@ namespace ForestGuard
         EnterRoom_Full = 10,
         EnterRoom_Started = 11,
         EnterRoom_NotExist = 12,
+        //Room_Updated =14,
         MaxType
     }
 }

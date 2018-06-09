@@ -10,7 +10,7 @@ using ForestGuard;
 public class LobbyController : MonoBehaviour {
 
     public GameObject Panel;
-    public static int RoomState = -1;
+    public static int LobbyState = -1;
     public static RoomList RoomList = null;
     private int NumOfRoom = 0;
     private int RoomIndex = 0;
@@ -24,15 +24,14 @@ public class LobbyController : MonoBehaviour {
         var btns = GameObject.FindGameObjectsWithTag("Room");
         foreach (var btn in btns)
         {
-            btn.GetComponent<Button>().onClick.AddListener(EnterRoom);
+            btn.GetComponent<Button>().onClick.AddListener(delegate () { EnterRoom(btn.gameObject); });
         }
-        Debug.Log(Client.Instance.IsThreadAlive() ? "yes" : "操你妈");
     }
 
     // Update is called once per frame
     void Update()
     {
-        switch (RoomState)
+        switch (LobbyState)
         {
             //case 0:
             //    MessageShow(Message); break;
@@ -45,7 +44,7 @@ public class LobbyController : MonoBehaviour {
             default:
                 return;
         }
-        RoomState = -1;
+        LobbyState = -1;
     }
 
     public void ShowRoomCreation(bool visible)
@@ -63,10 +62,11 @@ public class LobbyController : MonoBehaviour {
         //Debug.Log("Create Room Request");
     }
     
-    public void EnterRoom()
+    public void EnterRoom(GameObject sender)
     {
-        var index = GetComponent<Button>().name[4] - '0' - 1;
+        var index = sender.name[4] - '0' - 1;
         var room_id = RoomList.List[index].Id;
+        Debug.Log(room_id);
         var info = new EnterRoomInfo { RoomId = room_id, UserId = User.Id };
         Client.Instance.Send(RequestType.EnterRoom, Proto.Serialize(info));
     }
@@ -84,7 +84,7 @@ public class LobbyController : MonoBehaviour {
             }
             else
             {
-                r.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/InputBox/room_deactive");
+                r.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/InputBox/room_deactivate");
                 r.GetComponent<Button>().interactable = false;
             }
             ++i;
@@ -115,7 +115,7 @@ public class LobbyController : MonoBehaviour {
                 if (i < loadRoomNum)
                 {
                     r.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/InputBox/room_active");
-                    //r.GetComponent<Button>().interactable = true;
+                    r.GetComponent<Button>().interactable = true;
                     foreach (var text in r.GetComponentsInChildren<Text>())
                     {
                         if (text.name == "Name")
@@ -130,8 +130,8 @@ public class LobbyController : MonoBehaviour {
                 }
                 else
                 {
-                    r.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/InputBox/room_deactive");
-                    //r.GetComponent<Button>().interactable = false;
+                    r.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/InputBox/room_deactivate");
+                    r.GetComponent<Button>().interactable = false;
                     foreach (var text in r.GetComponentsInChildren<Text>())
                     {
                         if (text.name == "Name")

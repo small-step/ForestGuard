@@ -1100,6 +1100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loginPanel: {fileID: 0}
   signupPanel: {fileID: 0}
+  promptCtrl: {fileID: 0}
 --- !u!1 &593835223
 GameObject:
   m_ObjectHideFlags: 0
@@ -1964,8 +1965,7 @@ RectTransform:
 --- !u!114 &1083459272
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114850282040540152, guid: 25a2bfb71d80b8649b6f4a41df439b3a,
-    type: 2}
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1083459270}
   m_Enabled: 1

@@ -13,6 +13,7 @@ public class InputControler : MonoBehaviour {
     public Button Login;
     public Button Signup;
     public bool isLogin;
+    private GameObject tempExitPrompt;
     //private GameObject tempHint;
     //private bool isfocused = false;
 
@@ -56,6 +57,14 @@ public class InputControler : MonoBehaviour {
             else
             {
                 Signup.onClick.Invoke();
+            }
+        }
+        if(Input.GetKeyUp(KeyCode.Escape))
+        {
+            if(tempExitPrompt == null)
+            {
+                tempExitPrompt = Instantiate(Resources.Load("UI/Prefabs/ExitPromptPanel")) as GameObject;
+                tempExitPrompt.GetComponent<Transform>().SetParent(GameObject.Find("Background").GetComponent<Transform>(), false);
             }
         }
         //if(LoginFirstSelected.isFocused == true)
