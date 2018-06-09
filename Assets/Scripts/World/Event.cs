@@ -84,11 +84,11 @@ namespace ForestGuard
 
         public static void CreateRoomOk(byte[] msg)
         {
-            var seat = Proto.Deserialize<RoomSeat>(msg);
-            User.RoomId = seat.RoomId;
-            User.SeatId = seat.SeatId;
+            var seat_table = Proto.Deserialize<SeatTable>(msg);
+            User.RoomId = seat_table.RoomId;
+            RoomController.Players = seat_table.Players;
             LobbyController.LobbyState = 2;
-            string log = string.Format("room id: {0}, seat id: {1}", seat.RoomId, seat.SeatId);
+            string log = string.Format("room id: {0}", seat_table.RoomId);
             Debug.Log(log);
         }
 
@@ -99,11 +99,11 @@ namespace ForestGuard
 
         public static void EnterRoomOk(byte[] msg)
         {
-            var seat = Proto.Deserialize<RoomSeat>(msg);
-            User.RoomId = seat.RoomId;
-            User.SeatId = seat.SeatId;
+            var seat_table = Proto.Deserialize<SeatTable>(msg);
+            User.RoomId = seat_table.RoomId;
+            RoomController.Players = seat_table.Players;
             LobbyController.LobbyState = 2;
-            string log = string.Format("room id: {0}, seat id: {1}", seat.RoomId, seat.SeatId);
+            string log = string.Format("room id: {0}", seat_table.RoomId);
             Debug.Log(log);
         }
 

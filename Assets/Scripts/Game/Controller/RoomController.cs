@@ -8,7 +8,8 @@ using ForestGuard;
 
 public class RoomController : MonoBehaviour {
 
-
+    public static int State { get; set; }
+    public static List<PlayerInfo> Players { get; set; }
 
     // Use this for initialization
     void Start()
@@ -23,7 +24,7 @@ public class RoomController : MonoBehaviour {
 
     public void ReturnLobby()
     {
-        var info = new RoomSeat { RoomId = User.RoomId, SeatId = User.SeatId };
+        var info = new JoinOrLeaveRoom { UserId = User.Id, RoomId = User.RoomId };
         Client.Instance.Send(RequestType.LeaveRoom, Proto.Serialize(info));
         SceneManager.LoadSceneAsync(1);
     }

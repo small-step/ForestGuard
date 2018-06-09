@@ -57,7 +57,7 @@ public class LobbyController : MonoBehaviour {
         var room = GameObject.Find("RoomName").GetComponent<InputField>();
         var list = new List<PlayerInfo>();
         list.Add(new PlayerInfo { Id = User.Id, Nickname = User.Nickname });
-        var info = new RoomInfo { Id = 0, Name = room.text, PlayList = list };
+        var info = new RoomInfo { Id = 0, Name = room.text, Players = list };
         Client.Instance.Send(RequestType.CreateRoom, Proto.Serialize(info));
         //Debug.Log("Create Room Request");
     }
@@ -66,8 +66,7 @@ public class LobbyController : MonoBehaviour {
     {
         var index = sender.name[4] - '0' - 1;
         var room_id = RoomList.List[index].Id;
-        Debug.Log(room_id);
-        var info = new EnterRoomInfo { RoomId = room_id, UserId = User.Id };
+        var info = new JoinOrLeaveRoom { UserId = User.Id, RoomId = room_id };
         Client.Instance.Send(RequestType.EnterRoom, Proto.Serialize(info));
     }
 
@@ -124,7 +123,7 @@ public class LobbyController : MonoBehaviour {
                         }
                         else if (text.name == "RoomStatus")
                         {
-                            text.text = RoomList.List[RoomIndex + i].PlayList.Count + "/4";
+                            text.text = RoomList.List[RoomIndex + i].Players.Count + "/4";
                         }
                     }
                 }

@@ -58,7 +58,7 @@ namespace ForestGuard
         public string Name { get; set; }
 
         [ProtoMember(3)]
-        public List<PlayerInfo> PlayList { get; set; }
+        public List<PlayerInfo> Players { get; set; }
     }
 
     [ProtoContract(SkipConstructor = true)]
@@ -69,22 +69,22 @@ namespace ForestGuard
     }
 
     [ProtoContract(SkipConstructor = true)]
-    public class EnterRoomInfo
+    public class JoinOrLeaveRoom
     {
         [ProtoMember(1)]
-        public uint RoomId { get; set; }
+        public uint UserId { get; set; }
 
         [ProtoMember(2)]
-        public uint UserId { get; set; }
+        public uint RoomId { get; set; }
     }
 
     [ProtoContract(SkipConstructor = true)]
-    public class RoomSeat
+    public class SeatTable
     {
         [ProtoMember(1)]
         public uint RoomId { get; set; }
 
         [ProtoMember(2)]
-        public uint SeatId { get; set; }
+        public List<PlayerInfo> Players { get; set; }
     }
 }
